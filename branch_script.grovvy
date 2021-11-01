@@ -1,10 +1,10 @@
 import groovy.json.JsonSlurper
-import org.jenkinsci.plugins.scriptsecurity.scripts.ScriptApproval
+import javaposse.jobdsl.plugin.GlobalJobDslSecurityConfiguration
+import jenkins.model.GlobalConfiguration
 
-ScriptApproval scriptApproval = ScriptApproval.get()
-scriptApproval.pendingScripts.each {
-    scriptApproval.approveScript(it.hash)
-}
+// disable Job DSL script approval
+GlobalConfiguration.all().get(GlobalJobDslSecurityConfiguration.class).useScriptSecurity=false
+GlobalConfiguration.all().get(GlobalJobDslSecurityConfiguration.class).save()
 
 String basePath = 'multipleBranches'
 String repo = 'sheehan/grails-example'
